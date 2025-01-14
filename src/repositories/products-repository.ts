@@ -6,7 +6,7 @@ type Product = {
 const products: Product[] = [{id: 1, title: 'tomato'}, {id: 2, title: 'orange'}]
 
 export const productsRepository = {
-    findProductsByTitle(partOfTitle: string | null) {
+    async findProductsByTitle(partOfTitle: string | null): Promise<Product[]> {
         if (partOfTitle) {
             return products.filter(p => p.title.indexOf(partOfTitle) > -1)
         } else {
@@ -14,11 +14,11 @@ export const productsRepository = {
         }
     },
 
-    getProductById(id: number) {
+    async getProductById(id: number): Promise<Product | undefined> {
         return products.find(p => p.id === id)
     },
 
-    deleteProductById(id: number) {
+    async deleteProductById(id: number): Promise<boolean> {
         for (let i = 0; i < products.length; i++) {
             if (products[i].id === id) {
                 products.splice(i, 1)
@@ -29,7 +29,7 @@ export const productsRepository = {
         return false
     },
 
-    createNewProduct(title: string) {
+    async createNewProduct(title: string): Promise<Product> {
         const newProduct: Product = {
             id: +new Date(),
             title
@@ -38,8 +38,8 @@ export const productsRepository = {
         return newProduct
     },
 
-    updateProductById(id: number, title: string) {
-        const product = this.getProductById(id)
+    async updateProductById(id: number, title: string): Promise<boolean> {
+        const product = await this.getProductById(id)
 
         if (product && title) {
             product.title = title
