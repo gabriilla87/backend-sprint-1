@@ -1,7 +1,4 @@
-type Product = {
-    id: number
-    title: string
-}
+import {Product} from "../types/types";
 
 const products: Product[] = [{id: 1, title: 'tomato'}, {id: 2, title: 'orange'}]
 
